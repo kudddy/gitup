@@ -1,7 +1,9 @@
 import React from "react";
 import Auth from './Auth/AuthWithLogin';
 import JobStatus from './MainPageJobRender/JobRender';
-import SideBar from './Chat.js'
+import SideBar from './Chat.js';
+import About from './About/MainAbout';
+import HowTo from './HowTo/HowToMain';
 import { MDBCard, MDBListGroup, MDBListGroupItem, MDBContainer } from "mdbreact";
 import {
   BrowserRouter as Router,
@@ -46,6 +48,10 @@ export default function App() {
             <Route path="/check/:topicId">
              <SideBar />
             </Route>
+              <Route path="/howto">
+                  <HowTo />
+              </Route>
+
             {/*<Route path="/checktoken">*/}
             {/*  <Home />*/}
             {/*</Route>*/}
@@ -53,6 +59,7 @@ export default function App() {
             {/*<Route path="/startjob">*/}
             {/*  <Job />*/}
             {/*</Route>*/}
+
           </Switch>
         </div>
       </Router>
@@ -83,25 +90,25 @@ function Check(){
 //   return <h2>Экран с детализацией статуса работы job и статистики</h2>;
 // }
 
-function About() {
-
-  return (
-      <ul>
-        {/*<li>*/}
-        {/*  <Link to="/">Home</Link>*/}
-        {/*</li>*/}
-        <li>
-          <Link to="/about">Чуть чуть о сервисе</Link>
-        </li>
-        <li>
-          <Link to="/checktoken">Проверить токен</Link>
-        </li>
-        <li>
-          <Link to="/startjob">Личный кабинет</Link>
-        </li>
-      </ul>
-  )
-}
+// function About() {
+//
+//   return (
+//       <ul>
+//         {/*<li>*/}
+//         {/*  <Link to="/">Home</Link>*/}
+//         {/*</li>*/}
+//         <li>
+//           <Link to="/about">Чуть чуть о сервисе</Link>
+//         </li>
+//         <li>
+//           <Link to="/checktoken">Проверить токен</Link>
+//         </li>
+//         <li>
+//           <Link to="/startjob">Личный кабинет</Link>
+//         </li>
+//       </ul>
+//   )
+// }
 
 
 

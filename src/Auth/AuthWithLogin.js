@@ -8,6 +8,10 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import {CircularProgress, createMuiTheme, ThemeProvider} from "@material-ui/core";
 
+// import ButtonAppBar from './Navigation'
+
+import ButtonAppBar from '../HeaderComponent/Navigation'
+
 const theme = createMuiTheme({
     typography: {
         body1: {
@@ -128,6 +132,7 @@ class Auth extends React.Component {
 
         return (
             <div className="row">
+                <ButtonAppBar />
                 <Grid container direction="column" alignItems="center"
                       spacing={0}
                       justify="center"
