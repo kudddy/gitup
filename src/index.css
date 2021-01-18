@@ -5,8 +5,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  height: 100%;
 }
-
+html{
+  width: 100%;
+  height: 100%;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -20,12 +25,22 @@ maincontent {
   width: 100%;
   background-color: #F0F0F0;
 }
-menuleftcontent{
-  float: left;
-  width: 200px;
-  margin-left: -200px;
-  background-color: #CCCCCC;
+/*menuleftcontent{*/
+/*  float: left;*/
+/*  width: 200px;*/
+/*  margin-left: -200px;*/
+/*}*/
+/*clearingdiv {*/
+/*  clear: both;*/
+/*}*/
+#root{
+  width: 100%;
+  height: 100%;
+  background-color: #121212;
 }
-clearingdiv {
-  clear: both;
-}
+
+/*#row{*/
+/*  width: 100%;*/
+/*  height: 100%;*/
+/*  background-color: #121212;*/
+/*}*/

@@ -29,3 +29,12 @@ menuleftcontent{
 clearingdiv {
   clear: both;
 }
+
+row {
+  background: red;
+  width: 300px;
+  height: 300px;
+  border-radius: 150px;
+  outline: 5px solid green;
+}
+

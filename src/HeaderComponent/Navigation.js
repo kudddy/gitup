@@ -4,52 +4,130 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import { useHistory } from 'react-router-dom';
+import {useHistory, withRouter} from 'react-router-dom';
+import Grid from "@material-ui/core/Grid";
+import React from "react";
+import {withStyles} from "@material-ui/styles";
 
-const useStyles = makeStyles((theme) => ({
+// const useStyles = makeStyles((theme) => ({
+//
+//     root: {
+//         flexGrow: 1,
+//     },
+//     menuButton: {
+//         marginRight: theme.spacing(2),
+//     },
+//     title: {
+//         flexGrow: 1,
+//     },
+//     appBar:{
+//         background : '#2E3B55'
+//     }
+// }));
+
+const useStyles = (theme) => ({
     root: {
         flexGrow: 1,
     },
     menuButton: {
-        marginRight: theme.spacing(2),
     },
     title: {
         flexGrow: 1,
     },
-}));
-
-
-
-export default function ButtonAppBar() {
-    const classes = useStyles();
-    let history = useHistory();
-
-    const redirect = () => {
-        history.push('/about')
-    }
-    const redirectMain = () => {
-        history.push('/')
-    }
-    const redirectToken = () => {
-        history.push('/howto')
+    appBar:{
+        background : '#2E3B55'
     }
 
+});
 
-    return (
-        <div className={classes.root}>
-            <AppBar position="static">
-                <Toolbar>
-                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                        {/*<MenuIcon />*/}
-                    </IconButton>
-                    <Typography variant="h6" className={classes.title}>
-                        GitUp
-                    </Typography>
-                    <Button color="inherit" onClick={redirectMain}>Главная</Button>
-                    <Button color="inherit" onClick={redirect}>О сервисе</Button>
-                    <Button color="inherit" onClick={redirectToken}>Где взять токен</Button>
-                </Toolbar>
-            </AppBar>
-        </div>
-    );
-}
+class ButtonAppBar extends React.Component{
+    handleBack = ()=>{
+        this.probs.history.goBack()
+    }
+    handleForward = () =>{
+        console.log(this.props.history)
+        this.probs.history.go(+1)
+    }
+
+    render() {
+        // let history = useHistory();
+
+        const redirect = () => {
+            this.props.history.push('/about')
+        }
+        const redirectMain = () => {
+            this.props.history.push('/')
+        }
+        const redirectToken = () => {
+            this.props.history.push('/howto')
+        }
+        const Exit = () => {
+            // this.props.updateData(false)
+
+        let url = "http://127.0.0.1:9000/exit"
+        fetch(url, {  headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            credentials: "include"})
+            .then((response) => response.ok);
+
+            this.props.history.push('/')
+    }
+            const { classes } = this.props;
+        console.log("Смотрим, передали ли мы пропсы в дочерний класс")
+        console.log(this.props.AuthStatus)
+        let exitButton
+        if (this.props.AuthStatus){
+            exitButton = <Button color="inherit" onClick={Exit}>Выход</Button>
+        } else {
+            exitButton = null
+        }
+        return (
+            <div className={classes.root}>
+                <AppBar position="static" className={classes.appBar}>
+                    <Toolbar>
+                        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                        </IconButton>
+                        <Typography variant="h6" className={classes.title}>
+                            GitUp
+                        </Typography>
+                        <Grid container spacing={0} direction="row" justify="flex-end" alignItems="flex-end">
+                            <Button color="inherit" onClick={redirectMain}>Главная</Button>
+                            <Button color="inherit" onClick={redirect}>О сервисе</Button>
+                            <Button color="inherit" onClick={redirectToken}>Где взять токен</Button>
+                            {exitButton}
+                        </Grid>
+                    </Toolbar>
+                </AppBar>
+            </div>
+        )
+    }
+
+};
+export default withStyles(useStyles)(withRouter(ButtonAppBar))
+
+
+// export default function ButtonAppBar() {
+//     const classes = useStyles();
+
+//     const authStatus = {this.props.name}
+//     return (
+//         <div className={classes.root}>
+//             <AppBar position="static" className={classes.appBar}>
+//                 <Toolbar>
+//                     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+//                     </IconButton>
+//                     <Typography variant="h6" className={classes.title}>
+//                         GitUp
+//                     </Typography>
+//                     <Grid container spacing={0} direction="row" justify="flex-end" alignItems="flex-end">
+//                     <Button color="inherit" onClick={redirectMain}>Главная</Button>
+//                     <Button color="inherit" onClick={redirect}>О сервисе</Button>
+//                     <Button color="inherit" onClick={redirectToken}>Где взять токен</Button>
+//                     </Grid>
+//                 </Toolbar>
+//             </AppBar>
+//         </div>
+//     );
+// }
