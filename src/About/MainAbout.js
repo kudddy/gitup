@@ -78,9 +78,10 @@ class About extends React.Component{
         }
         console.log("Смотрим, передали ли мы пропсы в HowTo")
         console.log(this.props.AuthStatus)
+        //qj
         return (
             <div className="rowAbout">
-                <ButtonAppBar AuthStatus={this.props.AuthStatus}/>
+                {/*<ButtonAppBar AuthStatus={this.props.AuthStatus}/>*/}
                 <Grid container direction="column" alignItems="center"
                       spacing={0}
                       justify="center"

@@ -195,7 +195,7 @@ class Auth extends React.Component {
 
         return (
             <div className="row">
-                <ButtonAppBar AuthStatus={this.state.authState}/>
+                {/*<ButtonAppBar AuthStatus={this.state.authState}/>*/}
                 <Grid container direction="column" alignItems="center"
                       spacing={0}
                       justify="center"

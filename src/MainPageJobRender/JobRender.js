@@ -3,7 +3,7 @@ import './index.css';
 import {withRouter} from 'react-router-dom'
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import {Box, Card, CircularProgress} from '@material-ui/core';
+import {Box, Card, CardHeader, CircularProgress} from '@material-ui/core';
 import ButtonAppBar from '../HeaderComponent/Navigation'
 import {red} from "@material-ui/core/colors";
 
@@ -16,12 +16,43 @@ import Button from "@material-ui/core/Button";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/styles';
 //qqsss
-const useStyles = (theme) => ({
-    root: {
-        minWidth: 275,
+const useStyles = theme => ({
+    rootStatistic: {
+        minWidth: 100,
         // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)'
-        background:"#333"
+        background:"linear-gradient(to bottom, #203025 0%, #151516 100%)",
+        minHeight:700,
+        alignItems:"center",
+        display:"flex",
+        padding: 20
 
+    },
+    rootStartJob: {
+        minWidth: 100,
+        // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)'
+        background:"linear-gradient(225deg, #1623A6 0%, #3343D4 29%, #175EAC 73%, #176682 100%)",
+        minHeight:700,
+        alignItems:"center",
+        display:"flex",
+
+    },
+    testOne :{
+        display:"flex",
+        minHeight:700,
+        minWidth: 100,
+        borderRadius:15,
+        background:"linear-gradient(225deg, #1623A6 0%, #3343D4 29%, #175EAC 73%, #176682 100%)",
+    },
+    testTwo :{
+        display:"grid",
+        minHeight:700,
+        minWidth: 100,
+        borderRadius:15,
+        background:"linear-gradient(to bottom, #203025 0%, #151516 100%)",
+
+    },
+    testThere :{
+        display:"grid",
     },
     bullet: {
         display: 'inline-block',
@@ -30,11 +61,30 @@ const useStyles = (theme) => ({
     },
     title: {
         // fontSize: 14,
-        color:"#fff"
+        color:"#fff",
+        lineHeight:1.19048,
+        fontWeight:600,
+        letterSpacing:".011em",
+        fontFamily:"SF Pro Display,SF Pro Icons,Helvetica Neue,Helvetica,Arial,sans-serif"
+
+
+    },
+    mainText:{
+        fontSize:50,
+        lineHeight:1.05,
+        fontWeight:700,
+        letterSpacing:"-.015em",
+        fontFamily:"SF Pro Display,SF Pro Icons,Helvetica Neue,Helvetica,Arial,sans-serif",
+        display:"flex",
+        flexDirection:"column",
+        textAlign:"center",
     },
     pos: {
         marginBottom: 12,
     },
+    button:{
+        justifyContent: 'center'
+    }
 });
 
 class JobStatus extends React.Component {
@@ -140,7 +190,7 @@ class JobStatus extends React.Component {
 
         if (!isLoading){
             return (<div className="row">
-                <ButtonAppBar />
+                {/*<ButtonAppBar />*/}
 
                 <Grid container direction="column" alignItems="center"
                       spacing={0}
@@ -159,53 +209,47 @@ class JobStatus extends React.Component {
 
                 <div className="row" >
 
-                    <ButtonAppBar AuthStatus={true}/>
                     <br />
-                    {/*<Grid container spacing={1} >*/}
-                    {/*    <Grid item xs={6} sm={4}>*/}
-                    {/*        <Card className={classes.root}>*/}
-                    {/*            <CardContent>*/}
-                    {/*                <Typography className={classes.title} color="textSecondary" gutterBottom>*/}
-                    {/*                    Все о резюме*/}
-                    {/*                </Typography>*/}
-                    {/*                <Typography variant="h5" component="h2">*/}
-                    {/*                    Хочешь заказать резюме?*/}
-                    {/*                </Typography>*/}
-                    {/*            </CardContent>*/}
-                    {/*            <CardActions>*/}
-                    {/*                <Button size="small">Нажми сюда</Button>*/}
-                    {/*            </CardActions>*/}
-                    {/*        </Card>*/}
-                    {/*    </Grid>*/}
-                    {/*</Grid>*/}
 
-                <Grid container spacing={1} direction="column" justify="center" alignItems="center">
 
-                    <Grid  item xs={10} sm={4}>
-                        <Card className={classes.root}>
-                            <CardContent>
-                                <Typography className={classes.title} variant="h5" color="textSecondary" gutterBottom>
+                <Grid container spacing={3} direction="row">
+
+                    <Grid  item sm={12} md={6} lg={4}>
+
+                        {/*<Card className={classes.rootStatistic} >*/}
+                            <Card className={classes.testOne}>
+                                {/*grid-item large-span-6 small-span-12 grid-item-speed animate*/}
+                                {/*grid-item large-span-4 medium-span-6 small-span-12*/}
+                            <CardContent className={classes.testThere}>
+                                {/*<CardHeader title="Shrimp and Chorizo Paella" style={{ textAlign: 'center' }}/>*/}
+                                <Typography className={classes.title} variant="h5" color="textSecondary" gutterBottom justify="center" alignItems="center">
                                     Статистика работы приложения
                                 </Typography>
-                                <Typography className={classes.title} variant="body2" component="p">
+
+                                <Typography className={classes.mainText} align="center" variant="caption" justify="center" alignItems="center">
                                     Вы добавили: {json['CountFriendAdd']}
                                     <br />
-                                    Вас добавили: N/A(подсвечиваем что пока в разработке)
+                                    Вас добавили: {0}
+                                </Typography>
+                                <Typography className={classes.title} variant="h5" color="textSecondary" gutterBottom >
+                                    Детальная статика по кол-ву добавленых ботом аккаунтов
                                 </Typography>
                             </CardContent>
                         </Card>
                     </Grid>
-                    <Grid  item xs={10} sm={4}>
-                        <Card className={classes.root}>
-                            <CardContent>
+                    <Grid  item  sm={12} md={6} lg={8} >
+                        {/*<Card className={classes.rootStartJob}>*/}
+                        {/*grid-item large-span-8 medium-span-6 small-span-12 grid-item-battery animate*/}
+                        <Card className={classes.testTwo}>
+                            <CardContent className={classes.testThere}>
                                 <Typography className={classes.title} variant="h5" color="textSecondary" gutterBottom>
-                                    Статус работы скрипта
+                                    Статус работы бота
                                 </Typography>
-                                <Typography className={classes.title} variant="body2" component="p">
+                                <Typography className={classes.mainText} variant="body2" component="p">
                                     Статус: {json['Status']}
                                 </Typography>
                             </CardContent>
-                            <CardActions>
+                            <CardActions className={classes.button}>
                                 {button}
                             </CardActions>
                         </Card>

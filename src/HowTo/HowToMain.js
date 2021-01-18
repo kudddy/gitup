@@ -59,7 +59,7 @@ class HowTo extends React.Component{
         console.log(this.props.AuthStatus)
         return (
             <div className="rowAbout">
-                <ButtonAppBar AuthStatus={this.props.AuthStatus}/>
+                {/*<ButtonAppBar AuthStatus={this.props.AuthStatus}/>*/}
                 <Grid container direction="column" alignItems="center"
                       spacing={0}
                       justify="center"

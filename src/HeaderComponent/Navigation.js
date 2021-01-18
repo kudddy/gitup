@@ -41,6 +41,13 @@ const useStyles = (theme) => ({
 });
 
 class ButtonAppBar extends React.Component{
+    constructor(props) {
+        super(undefined);
+
+        this.state = {
+            AuthState: false,
+        }
+    }
     handleBack = ()=>{
         this.probs.history.goBack()
     }
@@ -48,6 +55,9 @@ class ButtonAppBar extends React.Component{
         console.log(this.props.history)
         this.probs.history.go(+1)
     }
+
+
+
 
     render() {
         // let history = useHistory();
@@ -62,8 +72,7 @@ class ButtonAppBar extends React.Component{
             this.props.history.push('/howto')
         }
         const Exit = () => {
-            // this.props.updateData(false)
-
+            this.props.updateData(false)
         let url = "http://127.0.0.1:9000/exit"
         fetch(url, {  headers: {
                 Accept: 'application/json',
@@ -74,9 +83,8 @@ class ButtonAppBar extends React.Component{
 
             this.props.history.push('/')
     }
-            const { classes } = this.props;
-        console.log("Смотрим, передали ли мы пропсы в дочерний класс")
-        console.log(this.props.AuthStatus)
+        const { classes } = this.props;
+
         let exitButton
         if (this.props.AuthStatus){
             exitButton = <Button color="inherit" onClick={Exit}>Выход</Button>

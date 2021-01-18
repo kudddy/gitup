@@ -9,6 +9,7 @@ import {
     Route, withRouter,
 } from "react-router-dom";
 import {withStyles} from "@material-ui/styles";
+import ButtonAppBar from "./HeaderComponent/Navigation";
 
 // export default function App() {
 //   return (
@@ -44,8 +45,10 @@ class App extends React.Component{
         console.log("Смотрим что в стайте в корневом аппе")
         console.log(this.state.authState)
         return (
+
             <Router>
                 <div>
+                    <ButtonAppBar AuthStatus={this.state.authState} updateData={this.updateData}/>
                     <Switch>
                         <Route exact path="/">
                             <Auth updateData={this.updateData}/>
