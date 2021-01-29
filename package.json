@@ -47,7 +47,9 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/styles": "^4.11.2",
     "prop-types": "^15.7.2",
+    "react-cookie": "^4.0.3",
     "react-intl": "^5.10.9",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "universal-cookie": "^4.0.4"
   }
 }

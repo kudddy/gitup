@@ -4,6 +4,7 @@ import ButtonAppBar from '../HeaderComponent/Navigation'
 import Grid from "@material-ui/core/Grid";
 import {createMuiTheme, ThemeProvider} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
+import cookie from "cookie";
 
 const theme = createMuiTheme({
     typography: {
@@ -76,6 +77,10 @@ class About extends React.Component{
         const redirect = () => {
             this.props.history.push('/howto')
         }
+        let d = new Date();
+        d.setTime(d.getTime() + (60*60*1000));
+
+        cookie.set("onboarded", true, {path: "/", expires: d});
         console.log("Смотрим, передали ли мы пропсы в HowTo")
         console.log(this.props.AuthStatus)
         //qj

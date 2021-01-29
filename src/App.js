@@ -54,7 +54,7 @@ class App extends React.Component{
                             <Auth updateData={this.updateData}/>
                         </Route>
                         <Route path={"/jobinfo/:topicId"}>
-                            <JobStatus />
+                            <JobStatus updateData={this.updateData}/>
                         </Route>
                         <Route path="/about">
                             <About AuthStatus={this.state.authState}/>

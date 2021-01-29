@@ -94,7 +94,7 @@ class JobStatus extends React.Component {
         this.state = {
             json: [],
             isLoading: false,
-            status: false
+            status: false,
         }
         this.HandleClickOn = this.HandleClickOn.bind(this);
         this.HandleClickOf = this.HandleClickOf.bind(this);
@@ -102,7 +102,7 @@ class JobStatus extends React.Component {
     async HandleClickOn (){
 
         //this.StartJob()
-        let url = 'http://127.0.0.1:9000/' + this.getToken() + '/start/addfriend'
+        let url = 'http://127.0.0.1:8080/' + this.getToken() + '/start/addfriend'
         console.log("Дошли до fetcj")
         console.log(url)
         fetch(url)
@@ -114,7 +114,7 @@ class JobStatus extends React.Component {
 
         console.log("Кликнули стартовать задачу")
         //this.StartJob()
-        let url = 'http://127.0.0.1:9000/' + this.getToken() + '/stop/addfriend'
+        let url = 'http://127.0.0.1:8080/' + this.getToken() + '/stop/addfriend'
 
         console.log("Дошли до fetcj")
         console.log(url)
@@ -133,13 +133,22 @@ class JobStatus extends React.Component {
     }
 
 
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     this.props.updateData(true)
+    // }
+
     componentDidMount() {
-        this.timer = setInterval(() => this.getJobStatus(), 1000 * 3)
+
+            this.timer = setInterval(() => this.getJobStatus(), 1000 * 3)
+
+
     }
 
-    // componentDidUpdate(){
-    //     console.log("Мы в componentDidUpdate и непонятно что делать")
-    // }
+    componentWillUnmount(){
+        this.setState({lifeComp:false})
+        clearInterval(this.timer);
+    }
+
 
 
     getToken(){
@@ -161,17 +170,22 @@ class JobStatus extends React.Component {
 
     async getJobStatus() {
         let token = this.getToken()
-        let url = 'http://127.0.0.1:9000/' + token + '/jobstatusbytoken'
-        console.log("Дошли до fetcj")
-        console.log(url)
+        let url = 'http://127.0.0.1:8080/' + token + '/jobstatusbytoken'
+        this.props.updateData(true)
+        console.log("Мы туточки")
         fetch(url)
             .then((response) => response.json())
-            .then((json => this.setState({json: json, isLoading: true, status:token})));
+            .then((json => this.setState({json: json, isLoading: true, status:token}))).catch((e)=>
+        {
+            this.props.history.push('/')
+            this.props.updateData(false)
+        }
+
+            );
+
+
 
     }
-
-
-
     render (){
         // йо
         const { classes } = this.props;
@@ -254,21 +268,6 @@ class JobStatus extends React.Component {
                             </CardActions>
                         </Card>
                             </Grid>
-                    {/*<Grid  item xs={6} sm={4}>*/}
-                    {/*    <Card className={classes.root}>*/}
-                    {/*        <CardContent>*/}
-                    {/*            <Typography className={classes.title} color="textSecondary" gutterBottom>*/}
-                    {/*                Статус сервисов*/}
-                    {/*            </Typography>*/}
-                    {/*            <Typography variant="body2" component="p">*/}
-                    {/*                OK*/}
-                    {/*            </Typography>*/}
-                    {/*        </CardContent>*/}
-                    {/*        <CardActions>*/}
-                    {/*            <Button size="small">Learn More</Button>*/}
-                    {/*        </CardActions>*/}
-                    {/*    </Card>*/}
-                    {/*</Grid>*/}
 
                 </Grid>
 

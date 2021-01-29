@@ -73,7 +73,7 @@ class ButtonAppBar extends React.Component{
         }
         const Exit = () => {
             this.props.updateData(false)
-        let url = "http://127.0.0.1:9000/exit"
+        let url = "http://127.0.0.1:8080/exit"
         fetch(url, {  headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
