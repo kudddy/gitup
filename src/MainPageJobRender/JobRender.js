@@ -3,8 +3,7 @@ import './index.css';
 import {withRouter} from 'react-router-dom'
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import {Box, Card, CardHeader, CircularProgress} from '@material-ui/core';
-import ButtonAppBar from '../HeaderComponent/Navigation'
+import {Card, CircularProgress} from '@material-ui/core';
 import {red} from "@material-ui/core/colors";
 
 //тест с пейпером
@@ -16,6 +15,7 @@ import Button from "@material-ui/core/Button";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/styles';
 //qqsss
+import Cookies from 'universal-cookie';
 const useStyles = theme => ({
     rootStatistic: {
         minWidth: 100,
@@ -87,6 +87,10 @@ const useStyles = theme => ({
     }
 });
 
+
+
+const cookies = new Cookies();
+
 class JobStatus extends React.Component {
     constructor(props) {
         super(undefined);
@@ -102,7 +106,7 @@ class JobStatus extends React.Component {
     async HandleClickOn (){
 
         //this.StartJob()
-        let url = 'http://127.0.0.1:8080/' + this.getToken() + '/start/addfriend'
+        let url = process.env.REACT_APP_BACKEND_ADR + this.getToken() + '/start/addfriend'
         console.log("Дошли до fetcj")
         console.log(url)
         fetch(url)
@@ -114,7 +118,7 @@ class JobStatus extends React.Component {
 
         console.log("Кликнули стартовать задачу")
         //this.StartJob()
-        let url = 'http://127.0.0.1:8080/' + this.getToken() + '/stop/addfriend'
+        let url = process.env.REACT_APP_BACKEND_ADR + this.getToken() + '/stop/addfriend'
 
         console.log("Дошли до fetcj")
         console.log(url)
@@ -138,8 +142,12 @@ class JobStatus extends React.Component {
     // }
 
     componentDidMount() {
+        const cookie = window.location.href.toString().split("&")[1];
 
-            this.timer = setInterval(() => this.getJobStatus(), 1000 * 3)
+        cookies.set('example-github-app', cookie, { path: '/' });
+
+
+        this.timer = setInterval(() => this.getJobStatus(), 1000 * 3)
 
 
     }
@@ -155,25 +163,20 @@ class JobStatus extends React.Component {
         let topicId
         try {
             topicId = this.props.match.params
-            console.log(topicId['topicId'])
-            console.log("Зашли в трай")
         } catch (err) {
-            console.log("Зашли в catch")
             topicId = false
         }
-        console.log("Смотрим что передали в функцию JOB getMovies")
-        console.log(topicId['topicId'])
 
-        let token = topicId['topicId']
+        let token = topicId['topicId'].split("&")[0]
         return token
     }
 
     async getJobStatus() {
         let token = this.getToken()
-        let url = 'http://127.0.0.1:8080/' + token + '/jobstatusbytoken'
+        let url = process.env.REACT_APP_BACKEND_ADR + token + '/jobstatusbytoken'
         this.props.updateData(true)
-        console.log("Мы туточки")
-        fetch(url)
+        fetch(url, {
+            credentials: "include"})
             .then((response) => response.json())
             .then((json => this.setState({json: json, isLoading: true, status:token}))).catch((e)=>
         {
@@ -194,7 +197,7 @@ class JobStatus extends React.Component {
 
         // инициализация кнопки
         let button
-        if (json['Status'] == "FINISH" || json['Status'] == "JOB NOT START YET"){
+        if (json['Status'] === "FINISH" || json['Status'] === "JOB NOT START YET"){
             button = <Button variant="contained" color="primary" onClick={this.HandleClickOn}>Start Job</Button>
 
         }

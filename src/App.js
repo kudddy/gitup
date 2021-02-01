@@ -6,34 +6,10 @@ import HowTo from './HowTo/HowToMain';
 import {
     BrowserRouter as Router,
     Switch,
-    Route, withRouter,
+    Route,
 } from "react-router-dom";
-import {withStyles} from "@material-ui/styles";
 import ButtonAppBar from "./HeaderComponent/Navigation";
 
-// export default function App() {
-//   return (
-//       <Router>
-//         <div>
-//           <Switch>
-//             <Route exact path="/">
-//               <Auth />
-//             </Route>
-//               <Route path={"/jobinfo/:topicId"}>
-//                   <JobStatus />
-//               </Route>
-//             <Route path="/about">
-//               <About />
-//             </Route>
-//               <Route path="/howto">
-//                   <HowTo />
-//               </Route>
-//
-//           </Switch>
-//         </div>
-//       </Router>
-//   );
-// }
 class App extends React.Component{
     state = {
         authState: false
@@ -75,9 +51,5 @@ export default App;
 
 
 
-function Job() {
-//йо
-  return <h2>Экран с детализацией статуса работы job и статистики</h2>;
-}
 
 

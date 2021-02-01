@@ -1,10 +1,9 @@
-import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import {useHistory, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import Grid from "@material-ui/core/Grid";
 import React from "react";
 import {withStyles} from "@material-ui/styles";
@@ -73,11 +72,8 @@ class ButtonAppBar extends React.Component{
         }
         const Exit = () => {
             this.props.updateData(false)
-        let url = "http://127.0.0.1:8080/exit"
-        fetch(url, {  headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            },
+        let url = process.env.REACT_APP_BACKEND_ADR + 'exit'
+        fetch(url, {
             credentials: "include"})
             .then((response) => response.ok);
 
@@ -116,26 +112,3 @@ class ButtonAppBar extends React.Component{
 export default withStyles(useStyles)(withRouter(ButtonAppBar))
 
 
-// export default function ButtonAppBar() {
-//     const classes = useStyles();
-
-//     const authStatus = {this.props.name}
-//     return (
-//         <div className={classes.root}>
-//             <AppBar position="static" className={classes.appBar}>
-//                 <Toolbar>
-//                     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-//                     </IconButton>
-//                     <Typography variant="h6" className={classes.title}>
-//                         GitUp
-//                     </Typography>
-//                     <Grid container spacing={0} direction="row" justify="flex-end" alignItems="flex-end">
-//                     <Button color="inherit" onClick={redirectMain}>Главная</Button>
-//                     <Button color="inherit" onClick={redirect}>О сервисе</Button>
-//                     <Button color="inherit" onClick={redirectToken}>Где взять токен</Button>
-//                     </Grid>
-//                 </Toolbar>
-//             </AppBar>
-//         </div>
-//     );
-// }

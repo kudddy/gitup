@@ -1,20 +1,20 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './index.css';
-import {withRouter, Link} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 //css
 import Grid from "@material-ui/core/Grid";
 
 import Typography from "@material-ui/core/Typography";
-import {CircularProgress, createMuiTheme, TextField, ThemeProvider} from "@material-ui/core";
-import Cookies from 'js-cookie';
 
 // import ButtonAppBar from './Navigation'
 
-import ButtonAppBar from '../HeaderComponent/Navigation'
 import {withStyles} from "@material-ui/styles";
 import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
+
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 const useStyles = (theme) => ({
     root: {
@@ -56,6 +56,11 @@ class Auth extends React.Component {
     render (){
 
         const { classes } = this.props;
+
+        cookies.set('myCat', 'Pacman', { path: '/' });
+        console.log("смотрим что в окнах")
+
+        console.log(window.location.href)
 
         return (
             <div className="row">
