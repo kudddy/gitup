@@ -109,7 +109,8 @@ class JobStatus extends React.Component {
         let url = process.env.REACT_APP_BACKEND_ADR + this.getToken() + '/start/addfriend'
         console.log("Дошли до fetcj")
         console.log(url)
-        fetch(url)
+        fetch(url, {
+            credentials: "include"})
             .then((response) => response.json())
             .then((json => this.setState({json: json, isLoading: true})));
     }
@@ -122,7 +123,8 @@ class JobStatus extends React.Component {
 
         console.log("Дошли до fetcj")
         console.log(url)
-        fetch(url)
+        fetch(url, {
+            credentials: "include"})
             .then((response) => response.json())
             .then((json => this.setState({json: json, isLoading: true})));
     }
