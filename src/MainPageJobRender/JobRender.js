@@ -16,6 +16,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/styles';
 //qqsss
 import Cookies from 'universal-cookie';
+
 const useStyles = theme => ({
     rootStatistic: {
         minWidth: 100,
@@ -51,6 +52,13 @@ const useStyles = theme => ({
         background:"linear-gradient(to bottom, #203025 0%, #151516 100%)",
 
     },
+    thirdWindow :{
+        display:"grid",
+        minHeight:700,
+        minWidth: 100,
+        borderRadius:15,
+        background:"linear-gradient(-217deg, #621e8f 16%, #762ca6 56%, #cf6e88 99%)",
+    },
     testThere :{
         display:"grid",
     },
@@ -66,8 +74,6 @@ const useStyles = theme => ({
         fontWeight:600,
         letterSpacing:".011em",
         fontFamily:"SF Pro Display,SF Pro Icons,Helvetica Neue,Helvetica,Arial,sans-serif"
-
-
     },
     mainText:{
         fontSize:50,
@@ -88,7 +94,6 @@ const useStyles = theme => ({
 });
 
 
-
 const cookies = new Cookies();
 
 class JobStatus extends React.Component {
@@ -106,27 +111,32 @@ class JobStatus extends React.Component {
     async HandleClickOn (){
 
         //this.StartJob()
-        let url = process.env.REACT_APP_BACKEND_ADR + this.getToken() + '/start/addfriend'
-        console.log("Дошли до fetcj")
-        console.log(url)
+        // для отладки
+        let url = 'http://127.0.0.1:56164/' + this.getToken() + '/start/addfriend'
+        // для прома
+        // let url = `${process.env.PUBLIC_URL}` + '/' + this.getToken() + '/start/addfriend'
         fetch(url, {
             credentials: "include"})
-            .then((response) => response.json())
-            .then((json => this.setState({json: json, isLoading: true})));
+            .then((response) => response.ok)
+            // .then((json => this.setState({jsonButton: json, isLoading: true})));
     }
     async HandleClickOf (){
 
 
         console.log("Кликнули стартовать задачу")
         //this.StartJob()
-        let url = process.env.REACT_APP_BACKEND_ADR + this.getToken() + '/stop/addfriend'
+        // let url = process.env.REACT_APP_BACKEND_ADR + this.getToken() + '/stop/addfriend'
+        // для отладки
+        let url = 'http://127.0.0.1:56164/' + this.getToken() + '/stop/addfriend'
+        // для прома
+        // let url = `${process.env.PUBLIC_URL}` + '/' + this.getToken() + '/stop/addfriend'
 
         console.log("Дошли до fetcj")
         console.log(url)
         fetch(url, {
             credentials: "include"})
-            .then((response) => response.json())
-            .then((json => this.setState({json: json, isLoading: true})));
+            .then((response) => response.ok)
+            // .then((json => this.setState({jsonButton: json, isLoading: true})));
     }
 
 
@@ -151,7 +161,6 @@ class JobStatus extends React.Component {
 
         this.timer = setInterval(() => this.getJobStatus(), 1000 * 3)
 
-
     }
 
     componentWillUnmount(){
@@ -175,13 +184,18 @@ class JobStatus extends React.Component {
 
     async getJobStatus() {
         let token = this.getToken()
-        let url = process.env.REACT_APP_BACKEND_ADR + token + '/jobstatusbytoken'
+        // для отладки
+        let url = 'http://127.0.0.1:56164/' + token + '/jobstatusbytoken'
+        // для прома
+        // let url = `${process.env.PUBLIC_URL}` + '/' + token + '/jobstatusbytoken'
         this.props.updateData(true)
         fetch(url, {
             credentials: "include"})
             .then((response) => response.json())
             .then((json => this.setState({json: json, isLoading: true, status:token}))).catch((e)=>
         {
+            console.log("ошибка")
+            console.log(e)
             this.props.history.push('/')
             this.props.updateData(false)
         }
@@ -197,7 +211,7 @@ class JobStatus extends React.Component {
         // баг с первым заходом на редирект
         const { json, isLoading } = this.state;
 
-        // инициализация кнопки
+        // инициализация кнопки, которая запускает job с заполнением github аккаунта
         let button
         if (json['Status'] === "FINISH" || json['Status'] === "JOB NOT START YET"){
             button = <Button variant="contained" color="primary" onClick={this.HandleClickOn}>Start Job</Button>
@@ -206,6 +220,10 @@ class JobStatus extends React.Component {
         else{
             button = <Button variant="contained" color="primary"onClick={this.HandleClickOf}>Stop Job</Button>
         }
+
+        const buttonGetResume = <Button variant="contained" color="primary" onClick={event =>  window.location.href='/resume'}>Заказать резюме</Button>
+
+        const buttonGetVacancy = <Button variant="contained" color="primary" onClick={event =>  window.location.href='/vacancy'}>Получить рекомендации</Button>
 
         if (!isLoading){
             return (<div className="row">
@@ -242,7 +260,7 @@ class JobStatus extends React.Component {
                             <CardContent className={classes.testThere}>
                                 {/*<CardHeader title="Shrimp and Chorizo Paella" style={{ textAlign: 'center' }}/>*/}
                                 <Typography className={classes.title} variant="h5" color="textSecondary" gutterBottom justify="center" alignItems="center">
-                                    Статистика работы приложения
+                                    Создайте крутое портфолио в вашем github аккаунте
                                 </Typography>
 
                                 <Typography className={classes.mainText} align="center" variant="caption" justify="center" alignItems="center">
@@ -250,29 +268,54 @@ class JobStatus extends React.Component {
                                     <br />
                                     Вас добавили: {0}
                                 </Typography>
-                                <Typography className={classes.title} variant="h5" color="textSecondary" gutterBottom >
-                                    Детальная статика по кол-ву добавленых ботом аккаунтов
+                                <Typography className={classes.mainText} variant="body2" component="p">
+                                    Статус: {json['Status']}
                                 </Typography>
+                                <CardActions className={classes.button}>
+                                    {button}
+                                </CardActions>
+
+                                {/*<Typography className={classes.title} variant="h5" color="textSecondary" gutterBottom >*/}
+                                {/*    Детальная статика по кол-ву добавленых ботом аккаунтов*/}
+                                {/*</Typography>*/}
                             </CardContent>
                         </Card>
                     </Grid>
-                    <Grid  item  sm={12} md={6} lg={8} >
+                    <Grid  item  sm={12} md={6} lg={4} >
                         {/*<Card className={classes.rootStartJob}>*/}
                         {/*grid-item large-span-8 medium-span-6 small-span-12 grid-item-battery animate*/}
                         <Card className={classes.testTwo}>
                             <CardContent className={classes.testThere}>
                                 <Typography className={classes.title} variant="h5" color="textSecondary" gutterBottom>
-                                    Статус работы бота
+                                    Наши эксперты создают резюме, которые открывают двери
                                 </Typography>
-                                <Typography className={classes.mainText} variant="body2" component="p">
-                                    Статус: {json['Status']}
+                                <Typography className={classes.mainText} variant="h4" component="p">
+                                    Получите больше приглашений на интервью
                                 </Typography>
                             </CardContent>
                             <CardActions className={classes.button}>
-                                {button}
+                                {buttonGetResume}
                             </CardActions>
                         </Card>
                             </Grid>
+                    <Grid  item  sm={12} md={6} lg={4} >
+                        {/*<Card className={classes.rootStartJob}>*/}
+                        {/*grid-item large-span-8 medium-span-6 small-span-12 grid-item-battery animate*/}
+                        <Card className={classes.thirdWindow}>
+                            <CardContent className={classes.testThere}>
+                                <Typography className={classes.title} variant="h5" color="textSecondary" gutterBottom>
+                                    Наиболее подходящая вакансия согласно вашему профилю на github
+                                </Typography>
+                                {/*<div dangerouslySetInnerHTML={text} />*/}
+                                <Typography className={classes.mainText} variant="h4" component="p">
+                                    Получите больше приглашений на интервью
+                                </Typography>
+                            </CardContent>
+                            <CardActions className={classes.button}>
+                                {buttonGetVacancy}
+                            </CardActions>
+                        </Card>
+                    </Grid>
 
                 </Grid>
 

@@ -72,12 +72,16 @@ class ButtonAppBar extends React.Component{
         }
         const Exit = () => {
             this.props.updateData(false)
-        let url = process.env.REACT_APP_BACKEND_ADR + 'exit'
-        fetch(url, {
-            credentials: "include"})
-            .then((response) => response.ok);
 
-            this.props.history.push('/')
+            // пром
+            // let url = `${process.env.PUBLIC_URL}` + '/exit'
+            // отладка
+            let url = "http://127.0.0.1:56164/exit"
+            fetch(url, {
+                credentials: "include"})
+                .then((response) => response.ok);
+
+                this.props.history.push('/')
     }
         const { classes } = this.props;
 

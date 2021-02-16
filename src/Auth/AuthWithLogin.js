@@ -13,7 +13,9 @@ import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
 
 import Cookies from 'universal-cookie';
-
+import {red} from "@material-ui/core/colors";
+import {CircularProgress} from "@material-ui/core";
+//
 const cookies = new Cookies();
 
 const useStyles = (theme) => ({
@@ -44,44 +46,107 @@ class Auth extends React.Component {
     constructor(props) {
         super(undefined);
 
-        this.state = {killComponent:true}
 
+        this.state = {
+            json: [],
+            isLoading: false,
+            killComponent:true
+        }
 
     }
-    componentWillUnmount(){
-        console.log("Смотри что тут")
-        console.log(this.state.killComponent)
+
+    handleBack = () => {
+        this.probs.history.goBack()
+    }
+    handleForward = () => {
+        console.log(this.props.history)
+        this.probs.history.go(+1)
+    }
+
+    componentDidMount() {
+
+        let data = cookies.get('example-github-app')
+
+        if (data){
+            // пром
+            // let url = `${process.env.PUBLIC_URL}` + '/authcheck'
+            let url = "http://127.0.0.1:56164/authcheck"
+            fetch(url, {
+                credentials: "include"})
+                .then((response) => response.json())
+                .then((json => this.setState({json: json, isLoading: true})))
+        }
+
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const { json, isLoading } = this.state;
+
+        let data = cookies.get('example-github-app')
+
+        if (isLoading){
+            console.log("Загрузился ответ от сервера, статус авторизации:")
+            console.log(json["Status"])
+
+            if (json["Status"]){
+                console.log(json["UserId"])
+                this.props.history.push('/jobinfo/' + json["UserId"] + '&' + data)
+            }
+        }
     }
 
     render (){
 
         const { classes } = this.props;
 
-        cookies.set('myCat', 'Pacman', { path: '/' });
-        console.log("смотрим что в окнах")
+        const { isLoading } = this.state;
 
-        console.log(window.location.href)
 
-        return (
-            <div className="row">
+        if (!isLoading){
+            return (<div className="row">
+                {/*<ButtonAppBar />*/}
+
                 <Grid container direction="column" alignItems="center"
                       spacing={0}
                       justify="center"
-                      style={{ minHeight: '60vh' }}>
-                    <Grid className={classes.interText} item xs={12}>
-                            <Typography align="center" variant="h4">Вход</Typography>
-                        <br/>
+                      style={{ minHeight: '60vh' , background: red}}>
+                    <Grid item xs={12}>
+                        <div className="col-md-1 col-md-offset-1">
+                            <CircularProgress />
+                        </div>
                     </Grid>
+                </Grid>
+
+            </div>);
+        } else {
+            return (
+                <div className="row">
+                    <Grid container direction="column" alignItems="center"
+                          spacing={0}
+                          justify="center"
+                          style={{ minHeight: '60vh' }}>
+                        <Grid className={classes.interText} item xs={12}>
+                            <Typography align="center" variant="h4">Вход</Typography>
+                            <br/>
+                        </Grid>
                         <div className="col-md-4">
                             <br/>
-                            <Button variant="contained" color="primary" onClick={event =>  window.location.href='http://localhost:8080/github/login'}>
+                            {/*отладка*/}
+                            <Button variant="contained" color="primary" onClick={event =>  window.location.href='http://localhost:56164/github/login'}>
+                                {/*пром*/}
+                                {/*<Button variant="contained" color="primary" onClick={event =>  window.location.href="/github/login"}>*/}
                                 Login with GitHub
                             </Button>
                         </div>
-                </Grid>
+                    </Grid>
 
-            </div>
-        );
+                </div>
+            );
+
+        }
+
+
+
 }
 }
 

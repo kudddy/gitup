@@ -31,6 +31,11 @@ docker build -f Dockerfile.prod -t sample:prod .
 docker run -it --rm -p 1337:80 sample:prod
 ```
 
+Пуш проекта в репозиторий
+```
+docker push kudddy/frontend:latest
+```
+
 ### Полезная статья с мануалом
 ```
 https://mherman.org/blog/dockerizing-a-react-app/

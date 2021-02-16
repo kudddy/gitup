@@ -3,6 +3,7 @@ import Auth from './Auth/AuthWithLogin';
 import JobStatus from './MainPageJobRender/JobRender';
 import About from './About/MainAbout';
 import HowTo from './HowTo/HowToMain';
+import GetVacancy from "./Vacancy/GetVacancy";
 import {
     BrowserRouter as Router,
     Switch,
@@ -37,6 +38,9 @@ class App extends React.Component{
                         </Route>
                         <Route path="/howto">
                             <HowTo AuthStatus={this.state.authState}/>
+                        </Route>
+                        <Route path="/vacancy">
+                            <GetVacancy />
                         </Route>
 
                     </Switch>
